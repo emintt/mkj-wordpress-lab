@@ -34,3 +34,4 @@ add_action(hook_name: 'wp_enqueue_scripts', callback: 'style_setup');
 // custom functions
 // __DIR__ kansio tällä hetkellä
 require_once (__DIR__ . '/inc/article-function.php');
+require_once (__DIR__ . '/inc/random-image.php');
