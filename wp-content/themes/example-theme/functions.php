@@ -15,6 +15,7 @@ function theme_setup(): void {
 
   // Add custom image sizes
   add_image_size( 'custom-header', 1200, 400, true ); // Custom header size
+
 }
 
   // Add menu
