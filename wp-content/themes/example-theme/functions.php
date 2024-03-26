@@ -29,3 +29,7 @@ function style_setup(): void {
 
 add_action(hook_name: 'wp_enqueue_scripts', callback: 'style_setup');
 // ulkoasu mukautaa sivuston identtitentti
+
+// custom functions
+// __DIR__ kansio tällä hetkellä
+require_once (__DIR__ . '/inc/article-function.php');
