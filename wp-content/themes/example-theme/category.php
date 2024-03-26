@@ -1,4 +1,5 @@
 <?php
+global $wp_query;
 get_header();
 ?>
 
@@ -20,7 +21,8 @@ get_header();
           // query: hakee posts, tags pages, xem tag parameters
           $args = ['tag' => 'featured', 'post_per_page' => 3];
           $products = new WP_query($args);
-          generate_article($products);
+          // generate_article($products);
+          generate_article($wp_query);
           ?>
         </section>
     </main>
