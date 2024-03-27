@@ -2,6 +2,7 @@
 
 function generate_article($products): void
 {
+  //  print_r($products);
   // tulosta haun tulokset, esim haku productsin sisällön
   if ($products->have_posts()) :
     while ($products->have_posts()) :
