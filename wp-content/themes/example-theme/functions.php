@@ -8,6 +8,16 @@ function search_filter($query) {
 }
 add_filter('pre_get_posts','search_filter');
 
+function my_breadcrumb_title_swapper( $title,  $type, $id ) {
+	if ( in_array( 'home', $type ) ) {
+		$title = __( 'Home' );
+	}
+
+	return $title;
+}
+add_filter( 'bcn_breadcrumb_title', 'my_breadcrumb_title_swapper', 3, 10 );
+
+
 function theme_setup(): void {
   // näkee title tag
   add_theme_support( 'title-tag' );
