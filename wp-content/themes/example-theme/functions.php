@@ -1,4 +1,13 @@
 <?php
+// filters
+function search_filter($query) {
+	if ($query->is_search) {
+		$query->set('category_name', 'products');
+	}
+	return $query;
+}
+add_filter('pre_get_posts','search_filter');
+
 function theme_setup(): void {
   // näkee title tag
   add_theme_support( 'title-tag' );
@@ -16,6 +25,8 @@ function theme_setup(): void {
   // Add custom image sizes
   add_image_size( 'custom-header', 1200, 400, true ); // Custom header size
 
+	// search
+	add_theme_support( 'html5', array( 'search-form' ) );
 }
 
   // Add menu

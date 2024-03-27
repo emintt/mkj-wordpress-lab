@@ -1,7 +1,13 @@
 <aside>
-  <section class="contact">
-    <h2>Contact Us</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, quos.</p>
-    <a href="#">Contact Us</a>
-  </section>
+    <section class="search">
+        <?php
+        // ensin se hakee index.phpsta
+        get_search_form();
+        ?>
+    </section>
+    <section class="contact">
+        <h2>Contact Us</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, quos.</p>
+        <a href="#">Contact Us</a>
+    </section>
 </aside>
