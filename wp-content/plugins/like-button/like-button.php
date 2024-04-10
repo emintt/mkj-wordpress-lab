@@ -39,15 +39,34 @@ function like_button() {
 
 	$post_id = get_the_ID();
 
-	$results = $wpdb->get_results( "SELECT * FROM $table_name WHERE post_id = $post_id" );
+	// get all likes for count
+	$preparedQuery1 = $wpdb->prepare( "SELECT * FROM $table_name WHERE post_id = %d", $post_id );
+	// results: array
+	$results = $wpdb->get_results( $preparedQuery1 );
 
-	$likes = count( $results );
+	$likes = count($results);
+
+	$current_user_id = get_current_user_id();
+
+	// get user likes
+	$preparedQuery2 = $wpdb->prepare("SELECT * FROM $table_name WHERE post_id = %d
+                      AND user_id = %d", [$post_id, $current_user_id]);
+	$user_like = $wpdb->get_results($preparedQuery2);
+
+	$icon = 'heart';
+	if ($user_like) {
+		$icon_like = 'heart-dislike';
+	}
 
 	// add like: function name, käynnistä se,
 	$output = '<form id="like-form" method="post" action="'. admin_url( 'admin-post.php' ) .'">';
 	$output .= '<input type="hidden" name="action" value="add_like">';
 	$output .= '<input type="hidden" name="post_id" value="' . $post_id . '">';
-	$output .= '<button id="like-button"><ion-icon name="thumbs-up"></ion-icon></button>';
+	$output .= '<button id="like-button"  style="
+										    border: 0;
+										    backface-visibility: hidden;
+										    background-color: rgba(0,0,0,0);
+											"><ion-icon name="'. $icon . '"></ion-icon></button>';
 	$output .= '<span id="like-count">' . $likes . '</span>';
 	$output .= '</form>';
 
@@ -66,6 +85,7 @@ function add_like() {
 	// tulee POSTista
 	$post_id = $_POST['post_id'];
 
+
 	$data = ['post_id' => $post_id ];
 
 	$format = ['%d'];
@@ -79,7 +99,7 @@ function add_like() {
 	}
 
 
-	wp_redirect( $_SERVER['HTTP_REFERER'] );
+	//wp_redirect( $_SERVER['HTTP_REFERER'] );
 	exit;
 }
 
