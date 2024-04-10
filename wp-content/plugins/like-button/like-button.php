@@ -55,7 +55,7 @@ function like_button() {
 
 	$icon = 'heart';
 	if ($user_like) {
-		$icon_like = 'heart-dislike';
+		$icon = 'heart-dislike';
 	}
 
 	// add like: function name, käynnistä se,
@@ -64,7 +64,6 @@ function like_button() {
 	$output .= '<input type="hidden" name="post_id" value="' . $post_id . '">';
 	$output .= '<button id="like-button"  style="
 										    border: 0;
-										    backface-visibility: hidden;
 										    background-color: rgba(0,0,0,0);
 											"><ion-icon name="'. $icon . '"></ion-icon></button>';
 	$output .= '<span id="like-count">' . $likes . '</span>';
@@ -84,11 +83,25 @@ function add_like() {
 
 	// tulee POSTista
 	$post_id = $_POST['post_id'];
+	$current_user_id = get_current_user_id();
 
+	$data = [
+		'post_id' => $post_id,
+		'user_id' => $current_user_id
+	];
 
-	$data = ['post_id' => $post_id ];
+	$format = ['%d', '%d'];
 
-	$format = ['%d'];
+	// check if user has already liked
+	$like = $wpdb->get_results("SELECT * from $table_name 
+         WHERE post_id = $post_id AND user_id = $current_user_id");
+
+	if ($like) {
+		$wpdb->delete($table_name, $data, $format);
+		echo 'Like removed';
+		wp_redirect($_SERVER['HTTP_REFERER']);
+		exit;
+	}
 
 	$success = $wpdb->insert( $table_name, $data, $format );
 
@@ -98,8 +111,7 @@ function add_like() {
 		echo 'Error adding like';
 	}
 
-
-	//wp_redirect( $_SERVER['HTTP_REFERER'] );
+	wp_redirect( $_SERVER['HTTP_REFERER'] );
 	exit;
 }
 
