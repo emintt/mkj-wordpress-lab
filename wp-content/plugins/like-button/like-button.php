@@ -43,7 +43,7 @@ function like_button() {
 
 	$likes = count( $results );
 
-	// add like: function name,
+	// add like: function name, käynnistä se,
 	$output = '<form id="like-form" method="post" action="'. admin_url( 'admin-post.php' ) .'">';
 	$output .= '<input type="hidden" name="action" value="add_like">';
 	$output .= '<input type="hidden" name="post_id" value="' . $post_id . '">';
@@ -63,20 +63,17 @@ function add_like() {
 
 	$table_name = $wpdb->prefix . 'likes';
 
+	// tulee POSTista
 	$post_id = $_POST['post_id'];
 
-	$data = array(
-		'post_id' => $post_id
-	);
+	$data = ['post_id' => $post_id ];
 
-	$format = array(
-		'%d'
-	);
+	$format = ['%d'];
 
 	$success = $wpdb->insert( $table_name, $data, $format );
 
 	if ( $success ) {
-		echo 'Like added';
+		echo 'Like added' . $success;
 	} else {
 		echo 'Error adding like';
 	}
@@ -87,7 +84,7 @@ function add_like() {
 }
 
 // add_action( 'wp_ajax_add_like', 'add_like' );
-
+// tunniste, func: call add_like
 add_action( 'admin_post_add_like', 'add_like' );
 
 // enqueue icons
