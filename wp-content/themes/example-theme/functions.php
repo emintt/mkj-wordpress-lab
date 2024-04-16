@@ -50,6 +50,24 @@ function style_setup(): void {
 }
 
 add_action(hook_name: 'wp_enqueue_scripts', callback: 'style_setup');
+
+// load javascript
+function script_setup():void {
+	wp_enqueue_script('single_post', get_template_directory_uri() . '/js/singlePost.js',
+		[], '1.0', true);
+	$script_data = [
+		// ajaxin vakiona
+		'ajax_url' => admin_url('admin.ajax.php'),
+
+	];
+	// tunniste wp_enqueue_script('single_post'), sen dataksi; 'singlePost'
+	wp_localize_script('single_post', 'singlePost', $script_data);
+};
+
+add_action('wp_enqueue_scripts', 'script_setup');
+
+// load style
+
 // ulkoasu mukautaa sivuston identtitentti
 
 // custom functions
